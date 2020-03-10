@@ -4,9 +4,9 @@ import warnings
 from typing import List, Callable
 
 from botbuilder.schema import (
-    Activity,
-    ActivityTypes,
-    ChannelAccount,
+    Activity,  # the activity of a bot
+    ActivityTypes,  # types of activites bot can handle, such as text, audio, image
+    ChannelAccount,  # the ...
     ConversationAccount,  # conversation ID?
     ResourceResponse,  # hold context?
     ConversationReference,
@@ -47,20 +47,34 @@ class ConsoleAdapter(BotAdapter):
         super(ConsoleAdapter, self).__init__()  # TODO ; learn what this means
 
         self.reference = ConversationReference(
-            channel_id="console",  # the id of conversation channel taking place
+            # the id of conversation channel taking place
+            channel_id="console",
+
             # the account that is either user or bot that sits within a channel
             user=ChannelAccount(id="user", name="User1_Troy"),
-            # save as above but this is the bot channel itself, imagine the ability to have a channel with multi bot.
+
+            # save as above but this is the bot channel itself,
+            # imagine the ability to have a channel with multi bot.
             bot=ChannelAccount(id="bot", name="MarkBot"),
-            # side project
-            # """
+
+            # TODO: side project """
             #     one user that enters a channel with two bots in the room
             #     what would this do?
-            #     Could the bot then just be able to both talk to other bot say one is finance and one is healthcare
+            #     Could the bot then just be able to both talk to other bot
+            #  say one is finance and one is healthcare
             #     the different bots would then handle various questions,
-            #     this would segment the difference and handling of data permissions
+            #     this would segment the difference and handling of data
+            # permissions
 
-            #     """the user would not know the difference if the bots know (through orchestration how to handle when an incoming activity triggers both bots. maybe ask a clarifying question to determine which bot should be used. -> this leads to bot hand-off. when a healthcare bot then needs to transfer to finance bot. what data log and conversation information would be preseved between the two? how do we ensure a user experience that the user understands and trusts the bot? So multi-bot with one name, with different skills.)
+            #     """the user would not know the difference if the bots know
+            #  (through orchestration how to handle when an incoming activity
+            # triggers both bots. maybe ask a clarifying question to determine
+            # which bot should be used. -> this leads to bot hand-off. when a
+            # healthcare bot then needs to transfer to finance bot. what data
+            # log and conversation information would be preseved between the
+            #  two? how do we ensure a user experience that the user
+            # understands and trusts the bot? So multi-bot with one name,
+            # with different skills.)
             # """
 
             conversation=ConversationAccount(
