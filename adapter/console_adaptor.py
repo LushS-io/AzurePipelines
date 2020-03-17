@@ -46,6 +46,8 @@ class ConsoleAdapter(BotAdapter):
     def __init__(self, reference: ConversationReference = None):
         super(ConsoleAdapter, self).__init__()  # TODO ; learn what this means
 
+        # possibly a self reference to the reference object to come in
+        # which is a key, value (dict)
         self.reference = ConversationReference(
             # the id of conversation channel taking place
             channel_id="console",
@@ -86,6 +88,12 @@ class ConsoleAdapter(BotAdapter):
         # warn that users need to pass in a conversation reference instance,
         # otherwise DEBUG: "parameter ignored"
         # checking if isinstance of reference a ConversationReference
+
+        # Warn users to pass in an instance of a ConversationReference,
+        # otherwise the parameter will be ignored.
+
+        # check if there is a conversation reference meaning,
+        #  not a new conversation?
         if reference is not isinstance(reference, ConversationReference):
             # .then() the conditional is done to check if x is not y...
             # .then()
@@ -124,6 +132,9 @@ class ConsoleAdapter(BotAdapter):
             # so that is why..
             # have a value for default id for self.reference.activity_id to
             # None type
+
+            # The only attribute on self.reference without an initial value is activity_id, so if reference does not
+            # have a value for activity_id, default self.reference.activity_id to None
             self.reference.activity_id = getattr(
                 reference, "activity_id", None
             )
