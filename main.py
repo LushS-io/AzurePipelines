@@ -1,19 +1,28 @@
 # main.py
 
-import asyncio  # async library
+# async library
+import asyncio
 
-from bot import EchoBot  # import EchoBot Object from bot
-from adapter import ConsoleAdapter  # how is this finding the adapter "from"
+# import EchoBot Object from bot
+from bot import EchoBot
 
-# instanciate the objects
-BOT = EchoBot()  # BOT object calling EchoBot constructor
-# ADAPTER object = the return val of ConsoleAdapter constructor
+# from "adapter" package via __init__.py import the ConsoleAdapter
+from adapter import ConsoleAdapter
+
+# instanciate the BOT and ADAPTER
+# Recall BOT is now an instance of the EchoBot Object...
+# --- The Constructor is called for no param call
+BOT = EchoBot()
+
+# ADAPTER object...
+# in this case a Console Adapter to communicate with bot via terminal
 ADAPTER = ConsoleAdapter()
 
-# create an event loop
+# Create event loop
 LOOP = asyncio.get_event_loop()
 
-
+# By default python will run from the 0 line when called.
+# If python script is called by it's own name..by convention, then run this.
 if __name__ == "__main__":
     try:  # try this except...
         # Greetings
@@ -21,8 +30,11 @@ if __name__ == "__main__":
 
         # Run the loop - unleesh the lava
         LOOP.run_until_complete(ADAPTER.process_activity(BOT.on_turn))
-    except KeyboardInterrupt:  # if a keyboard interrupt happens
+
+# if a keyboard interrupt happens
+    except KeyboardInterrupt:
         pass
+
     finally:  # to finish off the try loop...run these to do a closedown
         LOOP.stop()  # stop event loop
         LOOP.close()  # close the loop
