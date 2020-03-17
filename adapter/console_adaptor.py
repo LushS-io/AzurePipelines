@@ -13,7 +13,7 @@ from botbuilder.schema import (
     ResourceResponse,  # hold context?
     ConversationReference,
 )
-from botbuilder.core import (
+from botbuilder.core.turn_context import (
     TurnContext
 )
 
@@ -58,11 +58,11 @@ class ConsoleAdapter(BotAdapter):
             channel_id="console",
 
             # the account that is either user or bot that sits within a channel
-            user=ChannelAccount(id="user", name="User1_Troy"),
+            user=ChannelAccount(id="user", name="User1"),
 
             # save as above but this is the bot channel itself,
             # imagine the ability to have a channel with multi bot.
-            bot=ChannelAccount(id="bot", name="MarkBot"),
+            bot=ChannelAccount(id="bot", name="Bot"),
 
             # TODO: side project """
             #     one user that enters a channel with two bots in the room
@@ -99,7 +99,9 @@ class ConsoleAdapter(BotAdapter):
 
         # check if there is a conversation reference meaning,
         #  not a new conversation?
-        if reference is not None and not isinstance(reference, ConversationReference):
+        if reference is not None and not isinstance(
+                reference,
+                ConversationReference):
             # .then() the conditional is done to check if x is not y...
             # .then()
             warnings.warn(
@@ -109,25 +111,30 @@ class ConsoleAdapter(BotAdapter):
         else:  # if it is the proper instance "reference"
             self.reference.channel_id = getattr(
                 reference,
-                "conversation",
+                "channel_id",
+                self.reference.channel_id
             )
             self.reference.user = getattr(
                 reference,
-                "user"
+                "user",
+                self.reference.user
 
             )
             self.reference.bot = getattr(
                 reference,
-                "bot"
+                "bot",
+                self.reference.bot
             )
             self.reference.conversation = getattr(
                 reference,
-                "conversation"
+                "conversation",
+                self.reference.conversation
 
             )
             self.reference.service_url = getattr(
                 reference,
-                "service_url"
+                "service_url",
+                self.reference.service_url
 
             )
 
@@ -156,6 +163,7 @@ class ConsoleAdapter(BotAdapter):
         :return:
         """
         while True:
+            msg = input()
             if msg is None:
                 pass
             else:
@@ -163,7 +171,7 @@ class ConsoleAdapter(BotAdapter):
                 activity = Activity(
                     text=msg,
                     channel_id="console",
-                    from_property=ChannelAccount(id="user", name="User1_Troy"),
+                    from_property=ChannelAccount(id="user", name="User1"),
                     recipient=ChannelAccount(id="bot", name="Bot"),
                     conversation=ConversationAccount(id="Convo1"),
                     type=ActivityTypes.message,
@@ -220,22 +228,26 @@ class ConsoleAdapter(BotAdapter):
                         append = (
                             "(1 attachment)"
                             if len(activity.attachments) == 1
-                            else f"({len(activity.attachmets)} attachments"
+                            else f"({len(activity.attachmets)} attachments)"
                         )
                         print(f"{activity.text} {append}")
 
                     else:
-                        print(f"[{activity.type}]")
-                        await next_activity(i+1)
+                        print(activity.text)
+                    # await for next activity in this case keyboard input
+                    await next_activity(i+1)
 
                 else:
-                    return responses
+                    print(f"[{activity.type}]")
+                    await next_activity(i + 1)
+            else:
+                return responses
 
-            await next_activity(0)
+        await next_activity(0)
 
-        async def delete_activity(
-            self, context: TurnContext, reference: ConversationReference
-        ):
+    async def delete_activity(
+        self, context: TurnContext, reference: ConversationReference
+    ):
         """
         """
         raise NotImplementedError(

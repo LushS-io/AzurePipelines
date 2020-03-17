@@ -20,7 +20,7 @@ if __name__ == "__main__":
         print("Hi I'm EchoBot, I can repeat what you say to me! Try ME :)")
 
         # Run the loop - unleesh the lava
-        LOOP.run_until_complete(ADAPTER.proccess_activity(BOT.on_turn()))
+        LOOP.run_until_complete(ADAPTER.process_activity(BOT.on_turn))
     except KeyboardInterrupt:  # if a keyboard interrupt happens
         pass
     finally:  # to finish off the try loop...run these to do a closedown

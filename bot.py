@@ -20,13 +20,10 @@ class EchoBot:
             if context.activity.text.lower() == "quit":
                 # say adios
                 await context.send_activity("Thanks for your time, bye!")
+                exit(0)
             else:
                 # reply with what was sent
-                await context.send_activity(
-                    f"You said, '{context.activity.text}'"
-                )
+                await context.send_activity(f"You said, the following... \n{context.activity.text}")
 
             # @GOAL
             # send the activity back out from bot to repeat the message
-        pass
-    pass
