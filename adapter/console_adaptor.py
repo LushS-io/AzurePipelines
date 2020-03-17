@@ -151,7 +151,6 @@ class ConsoleAdapter(BotAdapter):
                 reference, "activity_id", None
             )
 
-        # ??
         self._next_id = 0
 
         pass

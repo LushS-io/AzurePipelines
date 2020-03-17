@@ -3,6 +3,8 @@
 # Library Imports
 from sys import exit
 
+# Object class called EchoBot
+
 
 class EchoBot:
     # will have properties such as conversation_id, user name, bot name,
