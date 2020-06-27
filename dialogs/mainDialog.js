@@ -82,7 +82,7 @@ class MainDialog extends ComponentDialog {
 
     const messageText = stepContext.options.restartMsg
       ? stepContext.options.restartMsg
-      : 'What can I help you with today?\nSay something like "Book a flight from Seattle to Chicago on March 22, 2020"';
+      : 'What can I help you with today?\nSay something like "Book a flight from Seattle to Minneapolis on June 30, 2020"';
     const promptMessage = MessageFactory.text(
       messageText,
       messageText,
