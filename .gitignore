@@ -1,4 +1,4 @@
-__pycache__
 *.code-workspace
 .vscode/
 node_modules
+.DS_Store
